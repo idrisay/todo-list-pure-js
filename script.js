@@ -21,12 +21,19 @@ addBtn.onclick = () => {
 
 const showTodos = (tds) => {
   todoList.innerHTML = "";
-  tds.forEach((element) => {
-    todoList.innerHTML +=
-      '<p class="list-group-item list-group-item-action mb-0 d-flex justify-content-between">' +
-      element.todo +
-      "<i onclick='deleteTodo(" + element.id + ")' class='bi bi-trash' style='cursor:pointer'></i></p>";
-  });
+  if (tds.length == 0) {
+    todoList.innerHTML =
+      '<p class="text-danger text-center">There is no todo.</p>';
+  } else {
+    tds.forEach((element) => {
+      todoList.innerHTML +=
+        '<div class="list-group-item list-group-item-action mb-0 d-flex justify-content-between">' +
+        element.todo +
+        "<div><i onclick='deleteTodo(" +
+        element.id +
+        ")' class='bi bi-trash p-4' style='cursor:pointer;'></i><i class='bi bi-pen'></i></div></div>";
+    });
+  }
 };
 
 window.onload = () => {
@@ -34,7 +41,7 @@ window.onload = () => {
 };
 
 const deleteTodo = (id) => {
-    const result = todos.filter(todo => todo.id !== id);
-    todos = result
-    showTodos(todos)
-}
+  const result = todos.filter((todo) => todo.id !== id);
+  todos = result;
+  showTodos(todos);
+};
