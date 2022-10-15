@@ -5,7 +5,7 @@ const todoList = document.getElementById("todo-list");
 let checkTodo = {};
 
 let todos = [
-  { id: 0, todo: "learn js", completed: false },
+  { id: 0, todo: "learn js", completed: true },
   { id: 1, todo: "learn css", completed: false },
   { id: 2, todo: "learn html", completed: false },
 ];
@@ -31,10 +31,19 @@ const showTodos = (tds) => {
       '<p class="text-danger text-center">There is no todo.</p>';
   } else {
     tds.forEach((element) => {
+      let completedStatus;
+      if (element.completed) {
+        completedStatus = "text-decoration-line-through";
+      }
+
       todoList.innerHTML +=
-        '<div class="list-group-item list-group-item-action mb-0 d-flex justify-content-between">' +
+        '<div class="list-group-item list-group-item-action mb-0 d-flex justify-content-between align-items-center"><p onclick="handleCompleted(' +
+        element.id +
+        ')" class="' +
+        completedStatus +
+        ' w-100 my-auto">' +
         element.todo +
-        "<div><i onclick='editTodo(" +
+        "</p><div class='d-flex'><i onclick='editTodo(" +
         element.id +
         ")' class='bi bi-pen px-2' style='cursor:pointer;'></i><i onclick='deleteTodo(" +
         element.id +
@@ -71,4 +80,13 @@ updateBtn.onclick = () => {
   todoName.value = "";
   addBtn.classList.remove("d-none");
   updateBtn.classList.add("d-none");
+};
+
+const handleCompleted = (id) => {
+  todos.forEach((element) => {
+    if (element.id == id) {
+      element.completed = !element.completed;
+    }
+  });
+  showTodos(todos);
 };
