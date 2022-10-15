@@ -2,6 +2,7 @@ const todoName = document.getElementById("todo-name");
 const addBtn = document.getElementById("add-new");
 const updateBtn = document.getElementById("update-todo");
 const todoList = document.getElementById("todo-list");
+
 let checkTodo = {};
 
 let todos = [
@@ -9,6 +10,15 @@ let todos = [
   { id: 1, todo: "learn css", completed: false },
   { id: 2, todo: "learn html", completed: false },
 ];
+
+const ls = localStorage.getItem('todos');
+if(ls){
+  todos = JSON.parse(ls);
+}else{
+  localStorage.setItem('todos', JSON.stringify(todos));
+}
+
+
 
 addBtn.onclick = () => {
   //   let newTodo = todoName.value;
@@ -25,6 +35,7 @@ addBtn.onclick = () => {
 };
 
 const showTodos = (tds) => {
+  saveLocal(tds)
   todoList.innerHTML = "";
   if (tds.length == 0) {
     todoList.innerHTML =
@@ -90,3 +101,7 @@ const handleCompleted = (id) => {
   });
   showTodos(todos);
 };
+
+const saveLocal = (tds) => {
+  localStorage.setItem('todos', JSON.stringify(tds));
+}
